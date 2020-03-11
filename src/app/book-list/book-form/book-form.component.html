@@ -36,13 +36,7 @@
           class="form-control"
           accept="image/*"
         />
-        <p
-          class="text-success"
-          [disabled]="bookForm.invalid || fileIsUploading"
-          type="submit"
-        >
-          Enregistrer
-        </p>
+        <p class="text-success" *ngIf="fileUploaded">Fichier chargé!</p>
       </div>
       <button
         class="btn btn-success"
