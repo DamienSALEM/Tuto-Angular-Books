@@ -1,15 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Book } from "../../models/books.model";
+import { BooksService } from "../../services/books.service";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-book-form',
-  templateUrl: './book-form.component.html',
-  styleUrls: ['./book-form.component.scss']
+  selector: "app-book-form",
+  templateUrl: "./book-form.component.html",
+  styleUrls: ["./book-form.component.scss"]
 })
 export class BookFormComponent implements OnInit {
+  bookForm: FormGroup;
 
-  constructor() { }
+  constructor(
+    private formBuiler: FormBuilder,
+    private BooksService: BooksService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    this.initForm();
   }
 
+  initForm() {
+    this.bookForm = this.formBuiler.group({
+      title: ["", Validators.required],
+      author: ["", Validators.required],
+      synopsis: ""
+    });
+  }
+
+  onSaveBook() {
+    const title = this.bookForm.get("title").value;
+    const author = this.bookForm.get("author").value;
+    const synopsis = this.bookForm.get("synopsis").value;
+    const newBook = new Book(title, author);
+    newBook.synopsis = synopsis;
+    this.BooksService.createNewBook(newBook);
+    this.router.navigate(["/books"]);
+  }
 }
