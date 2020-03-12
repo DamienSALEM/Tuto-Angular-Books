@@ -19,7 +19,7 @@ export class BookFormComponent implements OnInit {
     private formBuiler: FormBuilder,
     private BooksService: BooksService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -56,6 +56,6 @@ export class BookFormComponent implements OnInit {
   }
 
   detectFiles(event) {
-    this.onUploadFile(event.target.fils[0]);
+    this.onUploadFile(event.target.files[0]);
   }
 }
